@@ -29,14 +29,14 @@ def exp_func_1p(x, a, b, c):
 
 def group(var):
     i=-1
-    group=[]
+    group={}
     a=[]
     for x in var:
         if int(x[0])==i:
             a.append(x)
         else:
             if a!=[]:
-                group.append(a)
+                group[i]=a
                 a=[]
                 a.append(x)
                 i=int(x[0])
@@ -44,7 +44,7 @@ def group(var):
                 a.append(x)
                 i=int(x[0])
     if a!=[]:
-        group.append(a)
+        group[i]=a
     return(group)
 
 
@@ -240,26 +240,27 @@ def csv_to_2d_hist_old(listname, n, m, k):
 
 
 def x_ev_to_npy(filename, n, m):
-    #m - events number
+    #n - events number
     x_event=[]
-    X_i=[]
+    X_i={}
+    k=0
     if path.exists(filename) and (os.stat(filename).st_size > 0):
         with open (filename, newline='') as csvfile:
             a=csv.reader(csvfile, delimiter=',')
             for row in a:
                 if (not "#" in row[0]) and (not "ent" in row[0]):
-                    if len(X_i)<n:
-                        if len(x_event)<m:
-                            x_event.append(int(row[0]))
-                        else:
-                            X_i.append(np.array(x_event))
-                            x_event=[]
-                            x_event.append(int(row[0]))
-        if len(X_i)>0:
-            return(X_i)
-        else:
-            print('X_i is empty')
-            return(X_i)
+                    if len(x_event)<m:
+                        x_event.append(int(row[0]))
+                    else:
+                        X_i[k]=x_event
+                        x_event=[]
+                        x_event.append(int(row[0]))
+                        k=k+1
+            if len(X_i)>0:
+                return(X_i)
+            else:
+                print('X_i is empty')
+                return(X_i)
     else:
         print('no such file : ' + filename)
 
