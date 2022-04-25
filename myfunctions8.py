@@ -7,7 +7,7 @@ import matplotlib.colors as colors
 from matplotlib.ticker import ScalarFormatter
 import read_csv
 
-
+photopeak=58.36
 energy=[20, 50, 100, 200, 500, 1000, 2000, 4000]
 
 eff_511=[0.9994, 0.9997, 0.9979000000000001, 0.7504, 0.3762, 0.2705, 0.19280000000000003, 0.1666]
